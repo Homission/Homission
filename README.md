@@ -10,6 +10,7 @@ This is a service that helps homeless people become more independent by carrying
 **서혜원** : UI/UX Designer
 
 
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
