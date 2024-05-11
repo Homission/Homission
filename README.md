@@ -2,6 +2,14 @@
 
 This is a service that helps homeless people become more independent by carrying out missions and provides daily necessities through compensation.
 
+## Developer Info
+
+**권요한** : Team Leader, Flutter Developer
+**고정민** : Flutter Developer
+**이예은** : Flutter Developer
+**서혜원** : UI/UX Designer
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
