@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'detail_screen.dart';
 
 class BrowseScreen extends StatefulWidget {
   const BrowseScreen({super.key});
@@ -389,6 +390,12 @@ class _BrowseScreenState extends State<BrowseScreen>
                             setState(() {
                               _selectedIndex = index;
                             });
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MissionDetailScreen(),
+                              ),
+                            );
                           },
                           child: Container(
                             decoration: BoxDecoration(
