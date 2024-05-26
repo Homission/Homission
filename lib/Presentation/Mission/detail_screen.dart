@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'custom_app_bar.dart';
+import 'package:homission/Presentation/Mission/mission_certification_screen.dart';
 
 class MissionDetailScreen extends StatefulWidget {
   const MissionDetailScreen({super.key});
@@ -212,6 +213,17 @@ class _MissionDetailScreenState extends State<MissionDetailScreen> {
                   setState(() {
                     isParticipating = !isParticipating;
                   });
+                                    if (isParticipating) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CertificationScreen()),
+                    );
+                  } else {
+                    setState(() {
+                      isParticipating = !isParticipating;
+                    });
+                  }
                 },
                 child: Text(
                   isParticipating ? '인증하기' : '참여하기',
