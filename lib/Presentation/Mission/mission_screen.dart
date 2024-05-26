@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homission/Presentation/Mission/in_progress_screen.dart';
 import 'completed_screen.dart';
 import 'browse_screen.dart';
+import 'custom_app_bar.dart';
 
 class MissionScreen extends StatefulWidget {
   const MissionScreen({super.key});
@@ -31,30 +32,10 @@ class _MissionScreenState extends State<MissionScreen>
     return MaterialApp(
       debugShowCheckedModeBanner: false, // 디버그 배지 제거
       home: Scaffold(
-        appBar: AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: 96,
-              height: 28,
-              child: Image.asset(
-                'asset_mission/image_mission/mission_logo.png', // 로고 이미지 경로 설정
-                fit: BoxFit.fitWidth, // 가로 너비에 맞추고 세로 비율 유지
-              ),
-            ),
-          ),
-          leadingWidth: 96,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                // 검색 버튼 동작
-              },
-            ),
-          ],
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: Container(
+        appBar: CustomAppBar(),
+        body: Column(
+          children: [
+            Container(
               alignment: Alignment.centerLeft, // 탭을 왼쪽 정렬
               child: TabBar(
                 controller: _tabController,
@@ -90,14 +71,16 @@ class _MissionScreenState extends State<MissionScreen>
                 tabAlignment: TabAlignment.start, // 추가된 속성
               ),
             ),
-          ),
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            InProgressScreen(),
-            CompletedScreen(),
-            const BrowseScreen(),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  InProgressScreen(),
+                  CompletedScreen(),
+                  const BrowseScreen(),
+                ],
+              ),
+            ),
           ],
         ),
       ),
