@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-//import 'package:homission/Presentation/Mission/in_progress_screen.dart';
-//import 'completed_screen.dart';
-//import 'browse_screen.dart';
+import 'package:homission/Presentation/Mission/in_progress_screen.dart';
+import 'completed_screen.dart';
+import 'browse_screen.dart';
 
 class MissionScreen extends StatefulWidget {
   const MissionScreen({super.key});
@@ -95,9 +95,9 @@ class _MissionScreenState extends State<MissionScreen>
         body: TabBarView(
           controller: _tabController,
           children: [
-            //InProgressScreen(),
-            //CompletedScreen(),
-           // const //BrowseScreen(),
+            InProgressScreen(),
+            CompletedScreen(),
+            const BrowseScreen(),
           ],
         ),
       ),
