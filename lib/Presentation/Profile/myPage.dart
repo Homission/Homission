@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:homission/Presentation/Login/main.dart';
+import 'package:homission/Presentation/Mission/Home/home_screen.dart';
+import 'package:homission/Presentation/Mission/mission_screen.dart';
+import 'package:homission/Gifticon/MarketPage.dart';
+
 
 class myPage extends StatelessWidget {
   //무조건 진입할 때 한번 데이터 가져와서 넣어주면 됨
@@ -513,7 +517,7 @@ class myPage extends StatelessWidget {
                         Navigator.push(
                         context,
                         MaterialPageRoute(
-                        builder: (context) => MyHomePage())); //홈 페이지로
+                        builder: (context) => HomeScreen())); //홈 페이지로
                         },
                                 child: Container(
                                   height: 56,
@@ -576,7 +580,7 @@ class myPage extends StatelessWidget {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => MyHomePage())); //미션페이지로
+                                            builder: (context) => MissionScreen())); //미션페이지로
                                   },
                                 child: Container(
                                   height: 56,
@@ -639,7 +643,7 @@ class myPage extends StatelessWidget {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => MyHomePage())); //마켓페이지로
+                                            builder: (context) => MarketPage())); //마켓페이지로
                                   },
                                 child: Container(
                                   height: 56,

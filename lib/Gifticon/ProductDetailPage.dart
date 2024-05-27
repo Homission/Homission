@@ -121,7 +121,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: _isPurchased ? Colors.black : Colors.blue,
+                  backgroundColor: _isPurchased ? Colors.black : Colors.blue,
                 ),
                 child: Text(
                   _isPurchased ? '기프티콘 다운로드' : '구매하기',

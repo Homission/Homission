@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:homission/Presentation/Mission/Home/home_screen.dart';
 import 'package:homission/Presentation/Login/main.dart';
 
 class login_signIn extends StatefulWidget {
@@ -263,7 +264,7 @@ class _login_signIn_State extends State<login_signIn> {
                                   context,
                                   //MaterialPageRoute(builder: (context) => login_signUp1())
                                   MaterialPageRoute(
-                                      builder: (context) => MyHomePage()));
+                                      builder: (context) => HomeScreen()));
                             }
                           },
                           child: Container(
