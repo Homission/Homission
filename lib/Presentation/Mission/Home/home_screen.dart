@@ -465,6 +465,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 2,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home, color: Colors.black),

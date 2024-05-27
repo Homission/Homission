@@ -215,9 +215,7 @@ class _GifticonBuyPageState extends State<GifticonBuyPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                  primary: Colors.lightBlueAccent, // background
-                  onPrimary: Colors.white, // foreground
+                  foregroundColor: Colors.white, backgroundColor: Colors.lightBlueAccent, minimumSize: Size(double.infinity, 50), // foreground
                 ),
                 onPressed: () {
                   Navigator.pop(context, true);
