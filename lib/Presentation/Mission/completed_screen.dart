@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CompletedScreen extends StatefulWidget {
+  const CompletedScreen({super.key});
+
   @override
   _CompletedScreenState createState() => _CompletedScreenState();
 }
@@ -49,8 +51,8 @@ class _CompletedScreenState extends State<CompletedScreen> {
               child: Container(
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? Color.fromRGBO(73, 156, 255, 1)
-                      : Color.fromRGBO(245, 245, 245, 1),
+                      ? const Color.fromRGBO(73, 156, 255, 1)
+                      : const Color.fromRGBO(245, 245, 245, 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -64,7 +66,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
                         style: TextStyle(
                           color: isSelected
                               ? Colors.white
-                              : Color.fromRGBO(0, 0, 0, 1),
+                              : const Color.fromRGBO(0, 0, 0, 1),
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -76,7 +78,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
                         decoration: BoxDecoration(
                           color: isSelected
                               ? Colors.white
-                              : Color.fromRGBO(73, 156, 255, 1),
+                              : const Color.fromRGBO(73, 156, 255, 1),
                           borderRadius: BorderRadius.circular(100),
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -89,7 +91,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
                                 width: 16,
                                 height: 16,
                                 color: isSelected
-                                    ? Color.fromRGBO(73, 156, 255, 1)
+                                    ? const Color.fromRGBO(73, 156, 255, 1)
                                     : Colors.white,
                               ),
                               const SizedBox(width: 4),
@@ -97,7 +99,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
                                 '${rewardPoints[index]}P',
                                 style: TextStyle(
                                   color: isSelected
-                                      ? Color.fromRGBO(73, 156, 255, 1)
+                                      ? const Color.fromRGBO(73, 156, 255, 1)
                                       : Colors.white,
                                   fontFamily: 'Pretendard',
                                   fontWeight: FontWeight.bold,

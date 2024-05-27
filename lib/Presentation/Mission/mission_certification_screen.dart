@@ -37,7 +37,7 @@ class _CertificationScreenState extends State<CertificationScreen> {
             color: Color.fromRGBO(17, 17, 17, 1),
             fontFamily: 'Pretendard',
             fontSize: 16,
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
@@ -78,6 +78,7 @@ class _CertificationScreenState extends State<CertificationScreen> {
                                 color: Color.fromRGBO(72, 156, 255, 1),
                                 fontFamily: 'Pretendard',
                                 fontSize: 12,
+                                fontWeight: FontWeight.bold
                               ),
                             ),
                           ),

@@ -69,6 +69,8 @@ flutter:
   - asset_mission/image_mission/mission_logo.png
   - asset_mission/image_mission/material-symbols_group-outline-rounded.svg
   - asset_mission/image_mission/material-symbols_category-outline-rounded.svg
+  - asset_mission/image_mission/level1_home_first_img.png
+  - asset_mission/image_mission/home_list_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
