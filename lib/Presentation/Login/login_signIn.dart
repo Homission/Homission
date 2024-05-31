@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:homission/Presentation/Mission/Home/bottom_tap_screen.dart';
 
 import 'package:homission/Presentation/Mission/Home/home_screen.dart';
 import 'package:homission/Presentation/Login/main.dart';
@@ -258,14 +259,14 @@ class _login_signIn_State extends State<login_signIn> {
                         const SizedBox(height: 16),
                         GestureDetector(
                           onTap: () {
-                            if ((_emailController.text == "${_email}") &&
-                                (_passwardController.text == "${_password}")) {
+                            // if ((_emailController.text == "${_email}") &&
+                            //     (_passwardController.text == "${_password}")) {
                               Navigator.push(
                                   context,
                                   //MaterialPageRoute(builder: (context) => login_signUp1())
                                   MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
-                            }
+                                      builder: (context) => BottomTapScreen()));
+                            // }
                           },
                           child: Container(
                             width: 343,

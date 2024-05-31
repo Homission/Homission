@@ -120,11 +120,10 @@ class _GifticonBuyPageState extends State<GifticonBuyPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0)),
                       side: BorderSide(color: Colors.blue),
-                      shadowColor: Colors.white,
                       backgroundColor: Colors.white,
                       foregroundColor: Colors.blue,
                       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                      textStyle: TextStyle(fontSize: 15),
+                      textStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                     child: Text('전액 사용'),
                   ),
@@ -215,6 +214,7 @@ class _GifticonBuyPageState extends State<GifticonBuyPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   foregroundColor: Colors.white, backgroundColor: Colors.lightBlueAccent, minimumSize: Size(double.infinity, 50), // foreground
                 ),
                 onPressed: () {

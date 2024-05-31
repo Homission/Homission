@@ -29,7 +29,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         actions: [
           Icon(Icons.favorite_border),
           SizedBox(width: 16),
-          Icon(Icons.share),
+          ImageIcon(
+            AssetImage('assets/images/gifticon/cartImage.png'), // 이미지 경로를 실제 경로로 변경
+            size: 44.0,
+            color: Colors.black,
+          ),
           SizedBox(width: 16),
         ],
       ),
@@ -121,6 +125,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // 코너 반경을 20으로 설정
+                  ),
+                  textStyle: TextStyle(fontWeight: FontWeight.bold),
+                  foregroundColor: Colors.white,
                   backgroundColor: _isPurchased ? Colors.black : Colors.blue,
                 ),
                 child: Text(

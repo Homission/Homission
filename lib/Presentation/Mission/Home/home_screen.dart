@@ -464,36 +464,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.black),
-            label: '우리집',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment, color: Colors.black),
-            label: '미션',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart, color: Colors.black),
-            label: '마켓',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.black),
-            label: '마이페이지',
-          ),
-        ],
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Color(0xFFBFBFBF),
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        selectedLabelStyle: TextStyle(color: Colors.black),
-        unselectedLabelStyle: TextStyle(color: Color(0xFFBFBFBF)),
-        iconSize: 24,
-      ),
     );
   }
 }
