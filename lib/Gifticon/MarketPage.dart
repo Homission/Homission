@@ -7,7 +7,7 @@ import 'package:homission/Gifticon/Gifticon.dart';
 class MarketPage extends StatelessWidget {
   final List<Gifticon> mockGiftDataList = [
     Gifticon(
-      image: 'assets/gifticonSample1.png',
+      image: 'assets/images/gifticon/gifticonSample1.png',
       wish: false,
       name: '신라면 (작은 컵)',
       point: 2000,
@@ -16,7 +16,7 @@ class MarketPage extends StatelessWidget {
       '친구한테 선물로 받았는데, 받고 집 근처에 GS 편의점이 없어서 기부합니다! 맛있게 드세요 :)',
     ),
     Gifticon(
-      image: 'assets/gifticonSample2.png',
+      image: 'assets/images/gifticon/gifticonSample2.png',
       wish: false,
       name: '콜라',
       point: 1000,
@@ -25,7 +25,7 @@ class MarketPage extends StatelessWidget {
       '친구한테 선물로 받았는데, 받고 집 근처에 GS 편의점이 없어서 기부합니다! 맛있게 드세요 :)',
     ),
     Gifticon(
-      image: 'assets/gifticonSample2.png',
+      image: 'assets/images/gifticon/gifticonSample2.png',
       wish: false,
       name: '콜라',
       point: 1000,
@@ -34,7 +34,7 @@ class MarketPage extends StatelessWidget {
       '친구한테 선물로 받았는데, 받고 집 근처에 GS 편의점이 없어서 기부합니다! 맛있게 드세요 :)',
     ),
     Gifticon(
-      image: 'assets/gifticonSample2.png',
+      image: 'assets/images/gifticon/gifticonSample2.png',
       wish: false,
       name: '콜라',
       point: 1000,
@@ -43,7 +43,7 @@ class MarketPage extends StatelessWidget {
       '친구한테 선물로 받았는데, 받고 집 근처에 GS 편의점이 없어서 기부합니다! 맛있게 드세요 :)',
     ),
     Gifticon(
-      image: 'assets/gifticonSample2.png',
+      image: 'assets/images/gifticon/gifticonSample2.png',
       wish: false,
       name: '콜라',
       point: 1000,
@@ -52,7 +52,7 @@ class MarketPage extends StatelessWidget {
       '친구한테 선물로 받았는데, 받고 집 근처에 GS 편의점이 없어서 기부합니다! 맛있게 드세요 :)',
     ),
     Gifticon(
-      image: 'assets/gifticonSample2.png',
+      image: 'assets/images/gifticon/gifticonSample2.png',
       wish: false,
       name: '콜라',
       point: 1000,
@@ -61,7 +61,7 @@ class MarketPage extends StatelessWidget {
       '친구한테 선물로 받았는데, 받고 집 근처에 GS 편의점이 없어서 기부합니다! 맛있게 드세요 :)',
     ),
     Gifticon(
-      image: 'assets/gifticonSample2.png',
+      image: 'assets/images/gifticon/gifticonSample2.png',
       wish: false,
       name: '콜라',
       point: 1000,
@@ -78,10 +78,16 @@ class MarketPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: Image.asset('assets/homeImage.png',
-              fit: BoxFit.fitWidth),
-          onPressed: () {},
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: 96,
+            height: 28,
+            child: Image.asset(
+              'asset_mission/image_mission/mission_logo.png',
+              fit: BoxFit.fitWidth,
+            ),
+          ),
         ),
         actions: [
           IconButton(
@@ -91,7 +97,11 @@ class MarketPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => GifticonStorage(gifticons: [mockGiftDataList[0]], onTap: (){})));
               },
-              icon: Icon(Icons.notifications_none, color: Colors.black))
+              icon: ImageIcon(
+                AssetImage('assets/images/gifticon/cartImage.png'), // 이미지 경로를 실제 경로로 변경
+                size: 44.0,
+                color: Colors.black,
+              ))
         ],
         title: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -118,30 +128,6 @@ class MarketPage extends StatelessWidget {
                         builder: (context) =>
                             ProductDetailPage(gifticon: giftData)));
               });
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.black),
-            label: '우리집',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.flag, color: Colors.black),
-            label: '미션',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag, color: Colors.black),
-            label: '마켓',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.black),
-            label: '마이페이지',
-          ),
-        ],
-        onTap: (index) {
-          // Handle bottom navigation tap
         },
       ),
     );

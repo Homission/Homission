@@ -71,6 +71,8 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+  - assets/images/bottomtap/
+  - assets/images/gifticon/
   - asset_mission/image_mission/material-symbols_rewarded-ads-outline.svg
   - asset_mission/image_mission/mission_logo.png
   - asset_mission/image_mission/material-symbols_group-outline-rounded.svg
