@@ -19,6 +19,10 @@ class _login_signIn_State extends State<login_signIn> {
 
   String _email = "homission@gmail.com";
   String _password = "0000";
+  bool _errorEmail = false;
+  bool _errorPassword = false;
+  String _emailErrorMessage = "";
+  String _passwordErrorMessage = "";
 
   void checkText(String text) {
     _changedTextWidget = Container(
@@ -130,7 +134,7 @@ class _login_signIn_State extends State<login_signIn> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Flexible(
-                                            child: TextField(
+                                            child: TextFormField(
                                               controller: _emailController,
                                               onChanged: (text) {
                                                 checkText(text);
@@ -142,6 +146,23 @@ class _login_signIn_State extends State<login_signIn> {
                                                   contentPadding:
                                                       EdgeInsets.symmetric(
                                                           vertical: 0)),
+                                              validator: (text) {
+                                                if (text == null ||
+                                                    text.isEmpty) {
+                                                  return '';
+                                                  //return 'Please enter an email';
+                                                } else if (!text
+                                                    .contains('@')) {
+                                                  setState(() {
+                                                    _emailErrorMessage = '****@****.*** 형식으로 입력해주세요';
+                                                  });
+                                                  return null;
+                                                } else {
+                                                  _emailErrorMessage = '';
+                                                }
+                                                return null;
+                                              },
+
                                               // style: TextStyle(
                                               //   color: Color(0xFF111111),
                                               //   fontSize: 16,
@@ -155,11 +176,10 @@ class _login_signIn_State extends State<login_signIn> {
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(height: 8),
-                                    Opacity(
-                                      opacity: 0,
-                                      child: Text(
-                                        '****@****.*** 형식으로 입력해주세요',
+                                    const SizedBox(height: 20),
+                                      if (_emailErrorMessage.isNotEmpty)
+                                      Text(
+                                       _emailErrorMessage,
                                         style: TextStyle(
                                           color: Color(0xFFEB2661),
                                           fontSize: 14,
@@ -169,7 +189,6 @@ class _login_signIn_State extends State<login_signIn> {
                                           letterSpacing: -0.28,
                                         ),
                                       ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -261,11 +280,11 @@ class _login_signIn_State extends State<login_signIn> {
                           onTap: () {
                             // if ((_emailController.text == "${_email}") &&
                             //     (_passwardController.text == "${_password}")) {
-                              Navigator.push(
-                                  context,
-                                  //MaterialPageRoute(builder: (context) => login_signUp1())
-                                  MaterialPageRoute(
-                                      builder: (context) => BottomTapScreen()));
+                            Navigator.push(
+                                context,
+                                //MaterialPageRoute(builder: (context) => login_signUp1())
+                                MaterialPageRoute(
+                                    builder: (context) => BottomTapScreen()));
                             // }
                           },
                           child: Container(
