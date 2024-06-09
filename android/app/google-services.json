@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "355244969156",
+    "firebase_url": "https://homission-79370-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "homission-79370",
+    "storage_bucket": "homission-79370.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355244969156:android:43bb341b721c2942288d91",
+        "android_client_info": {
+          "package_name": "com.homission.homission"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_ElEFXXKWggKECi5ven-IgeZ52SsUs-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
