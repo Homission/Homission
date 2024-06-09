@@ -17,8 +17,24 @@ class _login_signIn_State extends State<login_signIn> {
   final TextEditingController _passwardController = new TextEditingController();
   Widget _changedTextWidget = Container();
 
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwardController.dispose();
+    super.dispose();
+  }
+
+  bool _isValidEmail = true;
+  bool _isWrongPassword = false;
   String _email = "homission@gmail.com";
   String _password = "0000";
+
+  void _validateEmail(String email) {
+    setState(() {
+      // 이메일 정규식을 사용하여 유효성 검사
+      _isValidEmail = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+    });
+  }
 
   void checkText(String text) {
     _changedTextWidget = Container(
@@ -49,12 +65,18 @@ class _login_signIn_State extends State<login_signIn> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen size
+    final size = MediaQuery
+        .of(context)
+        .size;
+
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       body: Column(
         children: [
           Container(
-            width: 375,
-            height: 812,
+            width: size.width,
+            height: size.height,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(color: Colors.white),
             child: Stack(
@@ -63,14 +85,14 @@ class _login_signIn_State extends State<login_signIn> {
                   left: 0,
                   top: 0,
                   child: Container(
-                    width: 375,
+                    width: size.width,
                     height: 44,
                     child: Stack(
                       children: [
                         Positioned(
                           left: 0,
                           top: 0,
-                          child: Container(width: 375, height: 44),
+                          child: Container(width: size.width, height: 44),
                         ),
                       ],
                     ),
@@ -78,7 +100,7 @@ class _login_signIn_State extends State<login_signIn> {
                 ),
                 Positioned(
                   left: 16,
-                  top: 222,
+                  top: size.height * 0.273, // Adjusting to screen height
                   child: Container(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -108,56 +130,50 @@ class _login_signIn_State extends State<login_signIn> {
                                         letterSpacing: -0.28,
                                       ),
                                     ),
-                                    const SizedBox(height: 8),
+                                    const SizedBox(height: 16),
                                     Container(
-                                      width: 343,
-                                      //height: 50,
+                                      width: size.width - 32,
+                                      // 16 padding each side
                                       padding: const EdgeInsets.all(16),
                                       decoration: ShapeDecoration(
                                         shape: RoundedRectangleBorder(
                                           side: BorderSide(
                                               width: 1,
-                                              color: Color(0xFF111111)),
+                                              color: _isValidEmail ? Color(0xFF111111) : Colors.red,
+                                          ),
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                          BorderRadius.circular(8),
                                         ),
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                         children: [
                                           Flexible(
                                             child: TextField(
                                               controller: _emailController,
-                                              onChanged: (text) {
-                                                checkText(text);
-                                              },
+                                              //onChanged: _validateEmail,
+                                        onSubmitted: (_) => _validateEmail(_emailController.text),
                                               decoration: InputDecoration(
                                                   hintText: '123456@123454.com',
                                                   border: InputBorder.none,
                                                   isDense: true,
                                                   contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: 0)),
-                                              // style: TextStyle(
-                                              //   color: Color(0xFF111111),
-                                              //   fontSize: 16,
-                                              //   fontFamily: 'Pretendard',
-                                              //   fontWeight: FontWeight.w400,
-                                              //   height: 0.10,
-                                              //   letterSpacing: -0.32,
-                                              // ),
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 0),
+                                              ),
+
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(height: 8),
+                                    const SizedBox(height: 16),
                                     Opacity(
-                                      opacity: 0,
+                                      opacity: _isValidEmail? 0: 1,
                                       child: Text(
                                         '****@****.*** 형식으로 입력해주세요',
                                         style: TextStyle(
@@ -173,7 +189,7 @@ class _login_signIn_State extends State<login_signIn> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 32),
                               Container(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
@@ -191,25 +207,25 @@ class _login_signIn_State extends State<login_signIn> {
                                         letterSpacing: -0.28,
                                       ),
                                     ),
-                                    const SizedBox(height: 8),
+                                    const SizedBox(height: 16),
                                     Container(
-                                      width: 343,
+                                      width: size.width - 32,
                                       padding: const EdgeInsets.all(16),
                                       decoration: ShapeDecoration(
                                         shape: RoundedRectangleBorder(
                                           side: BorderSide(
                                               width: 1,
-                                              color: Color(0xFF111111)),
+                                              color: _isWrongPassword ? Colors.red : Color(0xFF111111)),
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                          BorderRadius.circular(8),
                                         ),
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                         children: [
                                           Flexible(
                                             child: TextField(
@@ -220,24 +236,16 @@ class _login_signIn_State extends State<login_signIn> {
                                                   border: InputBorder.none,
                                                   isDense: true,
                                                   contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: 0)),
-                                              // style: TextStyle(
-                                              //   color: Color(0xFF111111),
-                                              //   fontSize: 16,
-                                              //   fontFamily: 'Pretendard',
-                                              //   fontWeight: FontWeight.w400,
-                                              //   height: 0.10,
-                                              //   letterSpacing: -0.32,
-                                              // ),
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 0)),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(height: 8),
+                                    const SizedBox(height: 16),
                                     Opacity(
-                                      opacity: 0,
+                                      opacity: _isWrongPassword? 1 : 0,
                                       child: Text(
                                         '잘못된 비밀번호입니다.',
                                         style: TextStyle(
@@ -256,20 +264,23 @@ class _login_signIn_State extends State<login_signIn> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 32),
                         GestureDetector(
                           onTap: () {
-                            // if ((_emailController.text == "${_email}") &&
-                            //     (_passwardController.text == "${_password}")) {
+                            if (_emailController.text == _email &&
+                                _passwardController.text == _password) {
                               Navigator.push(
                                   context,
-                                  //MaterialPageRoute(builder: (context) => login_signUp1())
                                   MaterialPageRoute(
-                                      builder: (context) => BottomTapScreen()));
-                            // }
+                                      builder: (context) =>
+                                          BottomTapScreen()));
+                            } else {
+                              _isWrongPassword = true;
+                            }
                           },
                           child: Container(
-                            width: 343,
+                            width: size.width - 32,
+                            height: 58,
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 16),
                             decoration: ShapeDecoration(
@@ -302,29 +313,28 @@ class _login_signIn_State extends State<login_signIn> {
                   ),
                 ),
                 Positioned(
-                  left: 128,
-                  top: 92,
+                  left: (size.width - 120) / 2,
+                  top: size.height * 0.113,
                   child: Container(
                     width: 120,
                     height: 90,
-                    child: (Expanded(
-                      child: Image.asset(
-                          'assets/images/userManagementSystem/image3.png',
-                          fit: BoxFit.contain),
-                    )),
+                    child: Image.asset(
+                        'assets/images/userManagementSystem/image3.png',
+                        fit: BoxFit.contain),
                   ),
                 ),
+
                 Positioned(
-                  left: 140,
-                  top: 740,
+                  left: (size.width - 90) / 2, // Center horizontally
+                  top: size.height * 0.91,
                   child: Text(
                     '호미션에 문의하기',
                     style: TextStyle(
                       color: Color(0xFF5C5C5C),
+                      decoration: TextDecoration.underline,
                       fontSize: 14,
                       fontFamily: 'Pretendard',
                       fontWeight: FontWeight.w500,
-//textDecoration: TextDecoration.underline,
                       height: 0.11,
                       letterSpacing: -0.56,
                     ),
@@ -334,7 +344,7 @@ class _login_signIn_State extends State<login_signIn> {
                   left: 0,
                   top: 44,
                   child: Container(
-                    width: 375,
+                    width: size.width,
                     height: 44,
                     padding: const EdgeInsets.only(right: 331),
                     clipBehavior: Clip.antiAlias,
@@ -346,8 +356,6 @@ class _login_signIn_State extends State<login_signIn> {
                       children: [
                         Container(
                           width: 44,
-                          //height: double.infinity,
-                          //padding: const EdgeInsets.all(10),
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(),
                           child: Row(
@@ -355,40 +363,20 @@ class _login_signIn_State extends State<login_signIn> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                MyHomePage()));
-                                  },
-                                  child: Container(
-                                    //height: double.infinity,
-                                    // padding: const EdgeInsets.only(
-                                    //   top: 6.44,
-                                    //   left: 4.40,
-                                    //   right: 4,
-                                    //   bottom: 6.44,
-                                    // ),
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: Image.asset(
-                                              'assets/images/userManagementSystem/Frame26.png',
-                                              fit: BoxFit.cover),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              MyHomePage()));
+                                },
+                                child: Container(
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(),
+                                  child: Image.asset(
+                                      'assets/images/userManagementSystem/Frame26.png',
+                                      fit: BoxFit.cover),
                                 ),
                               ),
                             ],
