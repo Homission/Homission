@@ -7,18 +7,19 @@ class UserMission {
     required this.completedMission,
   });
 
-  // You can add methods or factory constructors if needed
-  factory UserMission.fromJson(Map<String, dynamic> json) {
+  factory UserMission.fromMap(Map<dynamic, dynamic> map) {
     return UserMission(
-      onGoingMission: List<int>.from(json['onGoingMission']),
-      completedMission: List<int>.from(json['completedMission']),
+      onGoingMission: List<int>.from(map['onGoingMission']),
+      completedMission: List<int>.from(map['completedMission']),
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'onGoingMission': onGoingMission,
       'completedMission': completedMission,
     };
   }
 }
+
+
