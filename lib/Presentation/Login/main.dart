@@ -6,13 +6,13 @@ import 'package:homission/Presentation/Login/login_userType.dart';
 import 'package:homission/Presentation/Login/login_signUp1.dart';
 import 'package:homission/Presentation/Login/login_signIn.dart';
 import 'package:firebase_core/firebase_core.dart';
-import '/firebase_options.dart';
+import 'package:homission/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-       options: DefaultFirebaseOptions.currentPlatform,
-   );
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -39,7 +39,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
   @override

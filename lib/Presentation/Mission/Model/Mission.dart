@@ -18,4 +18,28 @@ class Mission {
     required this.category,
     required this.missionImage,
   });
+
+  factory Mission.fromMap(Map<dynamic, dynamic> map) {
+    return Mission(
+      missionID: map['missionID'],
+      title: map['title'],
+      rewardPoints: map['rewardPoints'],
+      description: map['description'],
+      participants: map['participants'],
+      category: map['category'],
+      missionImage: map['missionImage'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'missionID': missionID,
+      'title': title,
+      'rewardPoints': rewardPoints,
+      'description': description,
+      'participants': participants,
+      'category': category,
+      'missionImage': missionImage,
+    };
+  }
 }
