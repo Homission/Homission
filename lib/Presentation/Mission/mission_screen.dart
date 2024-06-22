@@ -8,6 +8,8 @@ import 'BrowseMission/browse_screen_viewmodel.dart';
 import 'custom_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'mission_screen_viewmodel.dart';
+import 'package:homission/Presentation/Mission/Repository/mission_repository.dart';
+import 'package:homission/Presentation/Mission/Repository/firebase_mission_repository.dart';
 
 class MissionScreen extends StatefulWidget {
   const MissionScreen({super.key});
@@ -29,14 +31,16 @@ class _MissionScreenState extends State<MissionScreen>
     final inProgressViewModel = InProgressScreenViewModel();
     final completedViewModel = CompletedScreenViewModel();
     final browseViewModel = BrowseScreenViewModel();
+    final MissionRepository missionRepository = FirebaseMissionRepository();
 
     missionScreenViewModel = MissionScreenViewModel(
       inProgressViewModel: inProgressViewModel,
       completedViewModel: completedViewModel,
       browseViewModel: browseViewModel,
+      missionRepository: missionRepository,
     );
 
-    missionScreenViewModel.fetchAllData();
+    missionScreenViewModel.fetchAllData('userID_123');
   }
 
   @override
@@ -55,32 +59,31 @@ class _MissionScreenState extends State<MissionScreen>
             create: (_) => missionScreenViewModel.completedViewModel),
         ChangeNotifierProvider(
             create: (_) => missionScreenViewModel.browseViewModel),
+        ChangeNotifierProvider(create: (_) => missionScreenViewModel),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false, // 디버그 배지 제거
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: CustomAppBar(),
           body: Column(
             children: [
               Container(
-                alignment: Alignment.centerLeft, // 탭을 왼쪽 정렬
+                alignment: Alignment.centerLeft,
                 child: TabBar(
                   controller: _tabController,
                   isScrollable: true,
-                  labelColor:
-                      const Color.fromRGBO(18, 18, 18, 1), // 선택된 탭의 텍스트 색상
-                  unselectedLabelColor: const Color.fromRGBO(
-                      227, 227, 227, 1), // 선택되지 않은 탭의 텍스트 색상
+                  labelColor: const Color.fromRGBO(18, 18, 18, 1),
+                  unselectedLabelColor: const Color.fromRGBO(227, 227, 227, 1),
                   labelStyle: const TextStyle(
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                  ), // 선택된 탭의 텍스트 스타일
+                  ),
                   unselectedLabelStyle: const TextStyle(
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                  ), // 선택되지 않은 탭의 텍스트 스타일
+                  ),
                   tabs: const [
                     Tab(text: '진행중'),
                     Tab(text: '완료'),
@@ -89,13 +92,13 @@ class _MissionScreenState extends State<MissionScreen>
                   indicator: const BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
-                        width: 2.0, // 인디케이터 라인 두께 설정
+                        width: 2.0,
                       ),
                     ),
                   ),
                   labelPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  dividerColor: Colors.transparent, // 탭바 라인 투명
-                  tabAlignment: TabAlignment.start, // 추가된 속성
+                  dividerColor: Colors.transparent,
+                  tabAlignment: TabAlignment.start,
                 ),
               ),
               Expanded(
@@ -103,8 +106,8 @@ class _MissionScreenState extends State<MissionScreen>
                   controller: _tabController,
                   children: [
                     InProgressScreen(),
-                    CompletedScreen(),
-                    BrowseScreen(),
+                    const CompletedScreen(),
+                    const BrowseScreen(),
                   ],
                 ),
               ),
