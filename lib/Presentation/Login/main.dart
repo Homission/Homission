@@ -1,11 +1,18 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:homission/Presentation/Profile/myPage.dart';
 import 'package:homission/Presentation/responsive_positioned.dart';
 import 'package:homission/Presentation/Login/login_userType.dart';
 import 'package:homission/Presentation/Login/login_signUp1.dart';
 import 'package:homission/Presentation/Login/login_signIn.dart';
+import 'package:firebase_core/firebase_core.dart';
+import '/firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+       options: DefaultFirebaseOptions.currentPlatform,
+   );
   runApp(const MyApp());
 }
 
@@ -32,13 +39,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {

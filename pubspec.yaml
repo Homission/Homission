@@ -38,10 +38,16 @@ dependencies:
 
   flutter_svg: ^1.0.3
   image_picker: ^0.8.4+4
+  permission_handler: ^10.2.0
 
   firebase_auth: ^4.19.6
-  firebase_core: ^2.31.1
+
   provider: ^6.0.0
+  firebase_core: ^2.32.0
+  firebase_database: ^10.5.7
+  cloud_firestore: ^4.4.3
+  firebase_storage: ^11.7.7
+
 
 dev_dependencies:
   flutter_test:
