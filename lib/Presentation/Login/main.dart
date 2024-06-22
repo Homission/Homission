@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
       ),
       home: const MyHomePage(),
-        debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -43,14 +43,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     // Get the device width and height
-    double deviceWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double deviceHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       //appBar: AppBar(),
@@ -58,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           width: deviceWidth,
           height: deviceHeight,
-          color: Color(0xFFF5F5F5),
+          color: const Color(0xFFF5F5F5),
           child: Stack(
             children: [
               Positioned(
@@ -81,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           width: deviceWidth * 0.92,
                           padding: const EdgeInsets.all(16),
                           decoration: ShapeDecoration(
-                            color: Color(0xFFFFDA1B),
+                            color: const Color(0xFFFFDA1B),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -102,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ),
                               const SizedBox(width: 8),
-                              Expanded(
+                              const Expanded(
                                 child: Text(
                                   '카카오톡으로 로그인',
                                   textAlign: TextAlign.center,
@@ -124,14 +118,14 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => login_signIn()),
+                                builder: (context) => const login_signIn()),
                           );
                         },
                         child: Container(
                           width: deviceWidth * 0.92,
                           padding: const EdgeInsets.all(16),
                           decoration: ShapeDecoration(
-                            color: Color(0xFF26231D),
+                            color: const Color(0xFF26231D),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -144,14 +138,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                 height: 24,
                                 padding: const EdgeInsets.all(2),
                                 clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(),
+                                decoration: const BoxDecoration(),
                                 child: Image.asset(
                                   'assets/images/userManagementSystem/material_symbols_alternate_email_rounded.png',
                                   fit: BoxFit.cover,
                                 ),
                               ),
                               const SizedBox(width: 8),
-                              Expanded(
+                              const Expanded(
                                 child: Text(
                                   '이메일로 로그인',
                                   textAlign: TextAlign.center,
@@ -185,10 +179,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const SizedBox(height: 24),
+                              SizedBox(height: 24),
                               Text.rich(
                                 TextSpan(
                                   children: [
@@ -254,7 +248,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text(
                   '호미션',
                   style: TextStyle(
-                    color: Color(0xFF27221E),
+                    color: const Color(0xFF27221E),
                     fontSize: deviceWidth * 0.13,
                     fontFamily: 'ONE Mobile Title OTF',
                     fontWeight: FontWeight.w700,
@@ -268,7 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   '노숙인 자립을 위한\n미션 보상 서비스',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF5C5C5C),
+                    color: const Color(0xFF5C5C5C),
                     fontSize: deviceWidth * 0.05,
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.w500,
