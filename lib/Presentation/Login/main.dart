@@ -173,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => login_userType()),
+                                builder: (context) => login_signUp1()),
                           );
                         },
                         child: Container(
