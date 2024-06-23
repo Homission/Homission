@@ -1,0 +1,175 @@
+import 'package:flutter/material.dart';
+import 'package:homission/Presentation/Profile/myPage.dart';
+import 'package:homission/Presentation/Login/main.dart';
+
+class login_signUp2 extends StatefulWidget {
+  const login_signUp2({super.key});
+
+  @override
+  State<login_signUp2> createState() => _login_signUp2_State();
+}
+
+class _login_signUp2_State extends State<login_signUp2> {
+  final TextEditingController _emailController = TextEditingController();
+  bool _isValidCode = true;
+
+  void _validateEmail(String email) {
+    setState(() {
+      _isValidCode = RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+          .hasMatch(email);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 44),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyHomePage()),
+                      );
+                    },
+                    child: Container(
+                      width: 44,
+                      height: 44,
+                      padding: const EdgeInsets.all(10),
+                      child: Icon(Icons.arrow_back),
+                    ),
+                  ),
+                  Text(
+                    '1/2',
+                    style: TextStyle(
+                      color: Color(0xFF111111),
+                      fontSize: 16,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(width: 44),
+                ],
+              ),
+            ),
+            Container(
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width / 2,
+              height: 4,
+              color: Color(0xFF111111),
+            ),
+            SizedBox(height: 36),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                '인증번호를 입력해주세요',
+                style: TextStyle(
+                  color: Color(0xFF111111),
+                  fontSize: 24,
+                  fontFamily: 'Pretendard',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            SizedBox(height: 36),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 1,
+                      color: _isValidCode ? Color(0xFF111111) : Colors.red,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: TextField(
+                  controller: _emailController,
+                  onChanged: _validateEmail,
+                  decoration: InputDecoration(
+                    hintText: '123456@123454.com',
+                    border: InputBorder.none,
+                    isDense: true,
+                    contentPadding: EdgeInsets.symmetric(vertical: 0),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Opacity(
+                opacity: _isValidCode ? 0 : 1,
+                child: Text(
+                  '메일로 받은 인증번호를 입력해주세요',
+                  style: TextStyle(
+                    color: Color(0xFFEB2661),
+                    fontSize: 14,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: GestureDetector(
+                onTap: () {
+                  if (_isValidCode) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => myPage()),
+                    );
+                  }
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8, vertical: 16),
+                  decoration: ShapeDecoration(
+                    color: _isValidCode ? Color(0xFF489CFF) : Color(
+                        0xFFBFDDFF),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '다음',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 34),
+          ],
+        ),
+      ),
+    );
+  }
+}

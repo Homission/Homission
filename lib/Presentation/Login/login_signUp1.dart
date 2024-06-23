@@ -133,18 +133,20 @@ class _login_signUp1_State extends State<login_signUp1> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => myPage()),
-                  );
+                  if (_isValidEmail) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => myPage()),
+                    );
+                  }
                 },
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8, vertical: 16),
                   decoration: ShapeDecoration(
-                    color: _isValidEmail ? Color(0xFFBFDCFF) : Color(
+                    color: _isValidEmail ? Color(0xFF489CFF) : Color(
                         0xFFBFDDFF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
