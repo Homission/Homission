@@ -8,6 +8,8 @@ class FirebaseMissionRepository implements MissionRepository {
       FirebaseDatabase.instance.ref('Mission');
   final DatabaseReference _userMissionsRef =
       FirebaseDatabase.instance.ref('UserMission');
+  final DatabaseReference _userParticipationRef =
+      FirebaseDatabase.instance.ref('UserParticipation');
 
   @override
   Future<List<Mission>> fetchMissions() async {
@@ -33,4 +35,16 @@ class FirebaseMissionRepository implements MissionRepository {
       throw Exception("User mission data not found");
     }
   }
+
+  Future<double> fetchUserParticipationRate(
+      String userId, int missionId) async {
+    DataSnapshot snapshot =
+        await _userParticipationRef.child(userId).child('$missionId').get();
+    if (snapshot.exists) {
+      return snapshot.value as double;
+    } else {
+      return 0.0;
+    }
+  }
 }
+

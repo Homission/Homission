@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../detail_screen.dart';
+import '../DetailMission/detail_screen.dart';
 import 'package:provider/provider.dart';
 import 'browse_screen_viewmodel.dart';
 
+import 'package:homission/Presentation/Mission/Usecase/MissionDetailUseCase.dart';
+
 class BrowseScreen extends StatefulWidget {
-  const BrowseScreen({super.key});
+  final String userId;
+  final MissionDetailUseCase missionDetailUseCase;
+
+  const BrowseScreen({
+    required this.userId,
+    required this.missionDetailUseCase,
+    super.key,
+  });
 
   @override
   _BrowseScreenState createState() => _BrowseScreenState();
@@ -234,8 +243,12 @@ class _BrowseScreenState extends State<BrowseScreen>
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MissionDetailScreen(),
+                                    builder: (context) => MissionDetailScreen(
+                                      userId: widget.userId,
+                                      missionId: mission.missionID,
+                                      missionDetailUseCase:
+                                          widget.missionDetailUseCase,
+                                    ),
                                   ),
                                 );
                               },
