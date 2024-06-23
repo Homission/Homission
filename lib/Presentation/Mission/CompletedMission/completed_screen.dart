@@ -2,10 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'completed_screen_viewmodel.dart';
-import '../detail_screen.dart';
+import '../DetailMission/detail_screen.dart';
+
+import 'package:homission/Presentation/Mission/Usecase/MissionDetailUseCase.dart';
 
 class CompletedScreen extends StatefulWidget {
-  const CompletedScreen({super.key});
+  final String userId;
+  final MissionDetailUseCase missionDetailUseCase;
+
+  const CompletedScreen({
+    required this.userId,
+    required this.missionDetailUseCase,
+    super.key,
+  });
 
   @override
   _CompletedScreenState createState() => _CompletedScreenState();
@@ -24,12 +33,23 @@ class _CompletedScreenState extends State<CompletedScreen> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => viewModel,
-      child: CompletedScreenContent(),
+      child: CompletedScreenContent(
+        userId: widget.userId,
+        missionDetailUseCase: widget.missionDetailUseCase,
+      ),
     );
   }
 }
 
 class CompletedScreenContent extends StatelessWidget {
+  final String userId;
+  final MissionDetailUseCase missionDetailUseCase;
+
+  const CompletedScreenContent({
+    required this.userId,
+    required this.missionDetailUseCase,
+  });
+
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<CompletedScreenViewModel>(context);
@@ -54,7 +74,11 @@ class CompletedScreenContent extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MissionDetailScreen(),
+                    builder: (context) => MissionDetailScreen(
+                      userId: userId,
+                      missionId: mission.missionID,
+                      missionDetailUseCase: missionDetailUseCase,
+                    ),
                   ),
                 );
               },

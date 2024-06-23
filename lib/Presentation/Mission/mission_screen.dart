@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'mission_screen_viewmodel.dart';
 import 'package:homission/Presentation/Mission/Repository/mission_repository.dart';
 import 'package:homission/Presentation/Mission/Repository/firebase_mission_repository.dart';
+import 'package:homission/Presentation/Mission/Usecase/MissionDetailUseCaseImpl.dart';
+import 'package:homission/Presentation/Mission/Usecase/MissionDetailUseCase.dart';
 
 class MissionScreen extends StatefulWidget {
   const MissionScreen({super.key});
@@ -22,6 +24,7 @@ class _MissionScreenState extends State<MissionScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late MissionScreenViewModel missionScreenViewModel;
+  late MissionDetailUseCase missionDetailUseCase;
 
   @override
   void initState() {
@@ -32,6 +35,7 @@ class _MissionScreenState extends State<MissionScreen>
     final completedViewModel = CompletedScreenViewModel();
     final browseViewModel = BrowseScreenViewModel();
     final MissionRepository missionRepository = FirebaseMissionRepository();
+    missionDetailUseCase = MissionDetailUseCaseImpl(missionRepository);
 
     missionScreenViewModel = MissionScreenViewModel(
       inProgressViewModel: inProgressViewModel,
@@ -105,9 +109,18 @@ class _MissionScreenState extends State<MissionScreen>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    InProgressScreen(),
-                    const CompletedScreen(),
-                    const BrowseScreen(),
+                    InProgressScreen(
+                      userId: 'userID_123',
+                      missionDetailUseCase: missionDetailUseCase,
+                    ),
+                    CompletedScreen(
+                      userId: 'userID_123',
+                      missionDetailUseCase: missionDetailUseCase,
+                    ),
+                    BrowseScreen(
+                      userId: 'userID_123',
+                      missionDetailUseCase: missionDetailUseCase,
+                    ),
                   ],
                 ),
               ),

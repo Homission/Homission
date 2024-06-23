@@ -2,9 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'in_progress_screen_viewmodel.dart';
-import '../detail_screen.dart';
+import '../DetailMission/detail_screen.dart';
+import 'package:homission/Presentation/Mission/Usecase/MissionDetailUseCase.dart';
 
 class InProgressScreen extends StatefulWidget {
+  final String userId;
+  final MissionDetailUseCase missionDetailUseCase;
+
+  const InProgressScreen({
+    required this.userId,
+    required this.missionDetailUseCase,
+    super.key,
+  });
+
   @override
   _InProgressScreenState createState() => _InProgressScreenState();
 }
@@ -22,12 +32,23 @@ class _InProgressScreenState extends State<InProgressScreen> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => viewModel,
-      child: InProgressScreenContent(),
+      child: InProgressScreenContent(
+        userId: widget.userId,
+        missionDetailUseCase: widget.missionDetailUseCase,
+      ),
     );
   }
 }
 
 class InProgressScreenContent extends StatelessWidget {
+  final String userId;
+  final MissionDetailUseCase missionDetailUseCase;
+
+  const InProgressScreenContent({
+    required this.userId,
+    required this.missionDetailUseCase,
+  });
+
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<InProgressScreenViewModel>(context);
@@ -52,7 +73,11 @@ class InProgressScreenContent extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MissionDetailScreen(),
+                    builder: (context) => MissionDetailScreen(
+                      userId: userId,
+                      missionId: mission.missionID,
+                      missionDetailUseCase: missionDetailUseCase,
+                    ),
                   ),
                 );
               },
