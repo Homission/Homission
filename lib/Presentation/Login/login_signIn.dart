@@ -47,7 +47,7 @@ class _login_signIn_State extends State<login_signIn> {
     String password = _passwordController.text.trim();
     bool isValid = await signInWithEmailAndPassword(email, password);
     if (isValid) {
-      if (Config().isAdmin = false) {
+      if (Config().isAdmin == false) {
         print("Login successful!");
         Navigator.push(
             context,
