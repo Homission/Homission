@@ -5,6 +5,8 @@ import 'package:homission/Presentation/responsive_positioned.dart';
 import 'package:homission/Presentation/Login/login_userType.dart';
 import 'package:homission/Presentation/Login/login_signUp1.dart';
 import 'package:homission/Presentation/Login/login_signIn.dart';
+import 'package:homission/Presentation/Login/login_admin.dart';
+import 'package:homission/Presentation/Login/Config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:homission/firebase_options.dart';
 
@@ -24,6 +26,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
+        indicatorColor: Colors.white,
+        canvasColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          color: Colors.white, // 앱바 텍스트 색상
+        ),
       ),
       home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
@@ -168,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => login_userType()),
+                                builder: (context) => login_signUp1()),
                           );
                         },
                         child: Container(
@@ -268,6 +276,49 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.w500,
                     height: 1.5,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: deviceHeight * 0.02,
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () {
+
+                        Config().isAdmin = true;
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => login_admin()),
+                      );
+                    },
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '관리자이신가요? ',
+                            style: TextStyle(
+                              color: Color(0xFF5C5C5C),
+                              fontSize: deviceWidth * 0.035, // Smaller font size
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '관리자 로그인',
+                            style: TextStyle(
+                              color: Color(0xFF5C5C5C),
+                              fontSize: deviceWidth * 0.035, // Smaller font size
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                              decoration: TextDecoration.underline, // Underline
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),

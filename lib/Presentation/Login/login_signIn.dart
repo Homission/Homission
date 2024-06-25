@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:homission/Presentation/Mission/Home/bottom_tap_screen.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:homission/Presentation/Mission/Home/home_screen.dart';
 import 'package:homission/Presentation/Login/main.dart';
 
@@ -14,13 +14,13 @@ class login_signIn extends StatefulWidget {
 
 class _login_signIn_State extends State<login_signIn> {
   final TextEditingController _emailController = new TextEditingController();
-  final TextEditingController _passwardController = new TextEditingController();
+  final TextEditingController _passwordController = new TextEditingController();
   Widget _changedTextWidget = Container();
 
   @override
   void dispose() {
     _emailController.dispose();
-    _passwardController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -28,6 +28,34 @@ class _login_signIn_State extends State<login_signIn> {
   bool _isWrongPassword = false;
   String _email = "homission@gmail.com";
   String _password = "0000";
+
+  Future<bool> signInWithEmailAndPassword(String email, String password) async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return true;
+    } catch (e) {
+      print('Error: $e');
+      return false;
+    }
+  }
+
+  void _attemptLogin() async {
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+    bool isValid = await signInWithEmailAndPassword(email, password);
+    if (isValid) {
+      print("Login successful!");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  BottomTapScreen()));
+    } else {
+      print("Login failed!");
+      _isWrongPassword = true;
+    }
+  }
 
   void _validateEmail(String email) {
     setState(() {
@@ -229,7 +257,7 @@ class _login_signIn_State extends State<login_signIn> {
                                         children: [
                                           Flexible(
                                             child: TextField(
-                                              controller: _passwardController,
+                                              controller: _passwordController,
                                               obscureText: true,
                                               decoration: InputDecoration(
                                                   hintText: '*******',
@@ -267,16 +295,7 @@ class _login_signIn_State extends State<login_signIn> {
                         const SizedBox(height: 32),
                         GestureDetector(
                           onTap: () {
-                            if (_emailController.text == _email &&
-                                _passwardController.text == _password) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          BottomTapScreen()));
-                            } else {
-                              _isWrongPassword = true;
-                            }
+                            _attemptLogin();
                           },
                           child: Container(
                             width: size.width - 32,
