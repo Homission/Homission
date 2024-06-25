@@ -5,14 +5,16 @@ import 'package:homission/Presentation/responsive_positioned.dart';
 import 'package:homission/Presentation/Login/login_userType.dart';
 import 'package:homission/Presentation/Login/login_signUp1.dart';
 import 'package:homission/Presentation/Login/login_signIn.dart';
+import 'package:homission/Presentation/Login/login_admin.dart';
+import 'package:homission/Presentation/Login/Config.dart';
 import 'package:firebase_core/firebase_core.dart';
-import '/firebase_options.dart';
+import 'package:homission/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-       options: DefaultFirebaseOptions.currentPlatform,
-   );
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -24,9 +26,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
+        indicatorColor: Colors.white,
+        canvasColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          color: Colors.white, // 앱바 텍스트 색상
+        ),
       ),
       home: const MyHomePage(),
-        debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -39,20 +47,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {
     // Get the device width and height
-    double deviceWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double deviceHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       //appBar: AppBar(),
@@ -60,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           width: deviceWidth,
           height: deviceHeight,
-          color: Color(0xFFF5F5F5),
+          color: const Color(0xFFF5F5F5),
           child: Stack(
             children: [
               Positioned(
@@ -83,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           width: deviceWidth * 0.92,
                           padding: const EdgeInsets.all(16),
                           decoration: ShapeDecoration(
-                            color: Color(0xFFFFDA1B),
+                            color: const Color(0xFFFFDA1B),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -104,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ),
                               const SizedBox(width: 8),
-                              Expanded(
+                              const Expanded(
                                 child: Text(
                                   '카카오톡으로 로그인',
                                   textAlign: TextAlign.center,
@@ -126,14 +127,14 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => login_signIn()),
+                                builder: (context) => const login_signIn()),
                           );
                         },
                         child: Container(
                           width: deviceWidth * 0.92,
                           padding: const EdgeInsets.all(16),
                           decoration: ShapeDecoration(
-                            color: Color(0xFF26231D),
+                            color: const Color(0xFF26231D),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -146,14 +147,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                 height: 24,
                                 padding: const EdgeInsets.all(2),
                                 clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(),
+                                decoration: const BoxDecoration(),
                                 child: Image.asset(
                                   'assets/images/userManagementSystem/material_symbols_alternate_email_rounded.png',
                                   fit: BoxFit.cover,
                                 ),
                               ),
                               const SizedBox(width: 8),
-                              Expanded(
+                              const Expanded(
                                 child: Text(
                                   '이메일로 로그인',
                                   textAlign: TextAlign.center,
@@ -175,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => login_userType()),
+                                builder: (context) => login_signUp1()),
                           );
                         },
                         child: Container(
@@ -187,10 +188,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const SizedBox(height: 24),
+                              SizedBox(height: 24),
                               Text.rich(
                                 TextSpan(
                                   children: [
@@ -256,7 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text(
                   '호미션',
                   style: TextStyle(
-                    color: Color(0xFF27221E),
+                    color: const Color(0xFF27221E),
                     fontSize: deviceWidth * 0.13,
                     fontFamily: 'ONE Mobile Title OTF',
                     fontWeight: FontWeight.w700,
@@ -270,11 +271,54 @@ class _MyHomePageState extends State<MyHomePage> {
                   '노숙인 자립을 위한\n미션 보상 서비스',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF5C5C5C),
+                    color: const Color(0xFF5C5C5C),
                     fontSize: deviceWidth * 0.05,
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.w500,
                     height: 1.5,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: deviceHeight * 0.02,
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () {
+
+                        Config().isAdmin = true;
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => login_admin()),
+                      );
+                    },
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '관리자이신가요? ',
+                            style: TextStyle(
+                              color: Color(0xFF5C5C5C),
+                              fontSize: deviceWidth * 0.035, // Smaller font size
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '관리자 로그인',
+                            style: TextStyle(
+                              color: Color(0xFF5C5C5C),
+                              fontSize: deviceWidth * 0.035, // Smaller font size
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                              decoration: TextDecoration.underline, // Underline
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
