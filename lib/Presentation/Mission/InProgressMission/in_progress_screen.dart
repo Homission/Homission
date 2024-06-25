@@ -1,52 +1,85 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'in_progress_screen_viewmodel.dart';
+import '../DetailMission/detail_screen.dart';
+import 'package:homission/Presentation/Mission/Usecase/MissionDetailUseCase.dart';
 
-class CompletedScreen extends StatefulWidget {
-  const CompletedScreen({super.key});
+class InProgressScreen extends StatefulWidget {
+  final String userId;
+  final MissionDetailUseCase missionDetailUseCase;
+
+  const InProgressScreen({
+    required this.userId,
+    required this.missionDetailUseCase,
+    super.key,
+  });
 
   @override
-  _CompletedScreenState createState() => _CompletedScreenState();
+  _InProgressScreenState createState() => _InProgressScreenState();
 }
 
-class _CompletedScreenState extends State<CompletedScreen> {
-  final List<String> missions = [
-    '완료된 미션 1',
-    '완료된 미션 2',
-    '완료된 미션 3',
-    '완료된 미션 4',
-    '완료된 미션 5',
-  ];
+class _InProgressScreenState extends State<InProgressScreen> {
+  late InProgressScreenViewModel viewModel;
 
-  final List<int> rewardPoints = [
-    100,
-    200,
-    300,
-    400,
-    500,
-  ];
-
-  int? _selectedIndex;
+  @override
+  void initState() {
+    super.initState();
+    viewModel = Provider.of<InProgressScreenViewModel>(context, listen: false);
+  }
 
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => viewModel,
+      child: InProgressScreenContent(
+        userId: widget.userId,
+        missionDetailUseCase: widget.missionDetailUseCase,
+      ),
+    );
+  }
+}
+
+class InProgressScreenContent extends StatelessWidget {
+  final String userId;
+  final MissionDetailUseCase missionDetailUseCase;
+
+  const InProgressScreenContent({
+    required this.userId,
+    required this.missionDetailUseCase,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = Provider.of<InProgressScreenViewModel>(context);
+
     return ListView.builder(
-      itemCount: missions.length,
+      itemCount: viewModel.missions.length,
       itemBuilder: (context, index) {
-        final isSelected = _selectedIndex == index;
+        final mission = viewModel.missions[index];
+        final isSelected = viewModel.selectedIndex == index;
         return Padding(
           padding: EdgeInsets.only(
             left: 16.0,
             right: 16.0,
             top: index == 0 ? 16.0 : 10.0,
-            bottom: index == missions.length - 1 ? 16.0 : 0.0,
+            bottom: index == viewModel.missions.length - 1 ? 16.0 : 0.0,
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: GestureDetector(
               onTap: () {
-                setState(() {
-                  _selectedIndex = index;
-                });
+                viewModel.selectMission(index);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MissionDetailScreen(
+                      userId: userId,
+                      missionId: mission.missionID,
+                      missionDetailUseCase: missionDetailUseCase,
+                    ),
+                  ),
+                );
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -62,7 +95,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 8.0),
                       title: Text(
-                        missions[index],
+                        mission.title,
                         style: TextStyle(
                           color: isSelected
                               ? Colors.white
@@ -96,7 +129,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                '${rewardPoints[index]}P',
+                                '${mission.rewardPoints}P',
                                 style: TextStyle(
                                   color: isSelected
                                       ? const Color.fromRGBO(73, 156, 255, 1)

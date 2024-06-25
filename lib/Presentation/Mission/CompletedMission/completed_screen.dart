@@ -1,56 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'completed_screen_viewmodel.dart';
+import '../DetailMission/detail_screen.dart';
 
-class InProgressScreen extends StatefulWidget {
+import 'package:homission/Presentation/Mission/Usecase/MissionDetailUseCase.dart';
+
+class CompletedScreen extends StatefulWidget {
+  final String userId;
+  final MissionDetailUseCase missionDetailUseCase;
+
+  const CompletedScreen({
+    required this.userId,
+    required this.missionDetailUseCase,
+    super.key,
+  });
+
   @override
-  _InProgressScreenState createState() => _InProgressScreenState();
+  _CompletedScreenState createState() => _CompletedScreenState();
 }
 
-class _InProgressScreenState extends State<InProgressScreen> {
-  final List<String> missions = [
-    '미션 1',
-    '미션 2',
-    '미션 3',
-    '미션 4',
-    '미션 5',
-  ];
+class _CompletedScreenState extends State<CompletedScreen> {
+  late CompletedScreenViewModel viewModel;
 
-  final List<int> rewardPoints = [
-    100,
-    200,
-    300,
-    400,
-    500,
-  ];
-
-  int? _selectedIndex;
+  @override
+  void initState() {
+    super.initState();
+    viewModel = Provider.of<CompletedScreenViewModel>(context, listen: false);
+  }
 
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => viewModel,
+      child: CompletedScreenContent(
+        userId: widget.userId,
+        missionDetailUseCase: widget.missionDetailUseCase,
+      ),
+    );
+  }
+}
+
+class CompletedScreenContent extends StatelessWidget {
+  final String userId;
+  final MissionDetailUseCase missionDetailUseCase;
+
+  const CompletedScreenContent({
+    required this.userId,
+    required this.missionDetailUseCase,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = Provider.of<CompletedScreenViewModel>(context);
+
     return ListView.builder(
-      itemCount: missions.length,
+      itemCount: viewModel.missions.length,
       itemBuilder: (context, index) {
-        final isSelected = _selectedIndex == index;
+        final mission = viewModel.missions[index];
+        final isSelected = viewModel.selectedIndex == index;
         return Padding(
           padding: EdgeInsets.only(
             left: 16.0,
             right: 16.0,
             top: index == 0 ? 16.0 : 10.0,
-            bottom: index == missions.length - 1 ? 16.0 : 0.0,
+            bottom: index == viewModel.missions.length - 1 ? 16.0 : 0.0,
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: GestureDetector(
               onTap: () {
-                setState(() {
-                  _selectedIndex = index;
-                });
+                viewModel.selectMission(index);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MissionDetailScreen(
+                      userId: userId,
+                      missionId: mission.missionID,
+                      missionDetailUseCase: missionDetailUseCase,
+                    ),
+                  ),
+                );
               },
               child: Container(
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? Color.fromRGBO(73, 156, 255, 1)
-                      : Color.fromRGBO(245, 245, 245, 1),
+                      ? const Color.fromRGBO(73, 156, 255, 1)
+                      : const Color.fromRGBO(245, 245, 245, 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -60,11 +96,11 @@ class _InProgressScreenState extends State<InProgressScreen> {
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 8.0),
                       title: Text(
-                        missions[index],
+                        mission.title,
                         style: TextStyle(
                           color: isSelected
                               ? Colors.white
-                              : Color.fromRGBO(0, 0, 0, 1),
+                              : const Color.fromRGBO(0, 0, 0, 1),
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -76,7 +112,7 @@ class _InProgressScreenState extends State<InProgressScreen> {
                         decoration: BoxDecoration(
                           color: isSelected
                               ? Colors.white
-                              : Color.fromRGBO(73, 156, 255, 1),
+                              : const Color.fromRGBO(73, 156, 255, 1),
                           borderRadius: BorderRadius.circular(100),
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -89,15 +125,15 @@ class _InProgressScreenState extends State<InProgressScreen> {
                                 width: 16,
                                 height: 16,
                                 color: isSelected
-                                    ? Color.fromRGBO(73, 156, 255, 1)
+                                    ? const Color.fromRGBO(73, 156, 255, 1)
                                     : Colors.white,
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                '${rewardPoints[index]}P',
+                                '${mission.rewardPoints}P',
                                 style: TextStyle(
                                   color: isSelected
-                                      ? Color.fromRGBO(73, 156, 255, 1)
+                                      ? const Color.fromRGBO(73, 156, 255, 1)
                                       : Colors.white,
                                   fontFamily: 'Pretendard',
                                   fontWeight: FontWeight.bold,
