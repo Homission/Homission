@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:homission/Presentation/Login/login_signUp2.dart';
 import 'package:homission/Presentation/Profile/myPage.dart';
 import 'package:homission/Presentation/Login/main.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
 
 class login_signUp1 extends StatefulWidget {
   const login_signUp1({super.key});
@@ -11,14 +16,48 @@ class login_signUp1 extends StatefulWidget {
 
 class _login_signUp1_State extends State<login_signUp1> {
   final TextEditingController _emailController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isValidEmail = true;
-
+  bool _isOtpSent = false;
   void _validateEmail(String email) {
     setState(() {
       _isValidEmail = RegExp(
           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
           .hasMatch(email);
     });
+  }
+
+  Future<void> _sendOtp() async {
+    if (_isValidEmail) {
+      HttpsCallable callable = FirebaseFunctions.instance.httpsCallable('sendOtp');
+      final response = await callable.call({'email': _emailController.text});
+      print("_sendOtp()");
+      log('_sendOtp()', name: 'MyApp');
+      if (response.data['success']) {
+        print("response.data['success'] : true");
+        log('response.data[success]: true', name: 'MyApp');
+        setState(() {
+          _isOtpSent = true;
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => login_signUp2(),
+            settings: RouteSettings(arguments: _emailController.text),
+          ),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => login_signUp2(),
+            settings: RouteSettings(arguments: _emailController.text),
+          ),
+        );
+        print("response.data['success'] : false");
+        log('response.data[success]: false', name: 'MyApp');
+      }
+    }
   }
 
   @override
@@ -134,11 +173,7 @@ class _login_signUp1_State extends State<login_signUp1> {
               child: GestureDetector(
                 onTap: () {
                   if (_isValidEmail) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => myPage()),
-                    );
+                    _sendOtp();
                   }
                 },
                 child: Container(

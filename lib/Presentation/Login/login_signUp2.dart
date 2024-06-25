@@ -1,28 +1,86 @@
 import 'package:flutter/material.dart';
-import 'package:homission/Presentation/Profile/myPage.dart';
-import 'package:homission/Presentation/Login/main.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:homission/Presentation/Mission/Home/home_screen.dart';
+import 'Config.dart';
+import 'package:homission/Data/Network/user_repository.dart';
+import 'package:homission/Data/Network/user_model.dart';
+import 'package:homission/Data/Network/user_singleton.dart';
 
 class login_signUp2 extends StatefulWidget {
-  const login_signUp2({super.key});
-
   @override
-  State<login_signUp2> createState() => _login_signUp2_State();
+  _login_signUp2State createState() => _login_signUp2State();
 }
 
-class _login_signUp2_State extends State<login_signUp2> {
-  final TextEditingController _emailController = TextEditingController();
-  bool _isValidCode = true;
+class _login_signUp2State extends State<login_signUp2> {
+  final TextEditingController _otpController = TextEditingController();
+  final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
+  final UserRepository _userRepository = UserRepository();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _isOtpValid = true;
 
-  void _validateEmail(String email) {
-    setState(() {
-      _isValidCode = RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-          .hasMatch(email);
+  Future<void> _verifyOtp(String email) async {
+
+    String emailKey = email.replaceAll('.', '+');
+
+    try {
+
+      DatabaseEvent event = await _databaseReference.child('otps/$emailKey/otp').once();
+      DataSnapshot snapshot = event.snapshot;
+
+
+      String? storedOtp = snapshot.value as String?;
+
+      if (storedOtp != null && storedOtp == _otpController.text) {
+
+        await _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: '123456', // 기본 비밀번호 설정
+        );
+
+        await _saveUserInfo(email);
+
+
+        setState(() {
+          _isOtpValid = true;
+        });
+
+        print('OTP verified!');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(),
+          ),
+        );
+      } else {
+
+        setState(() {
+          _isOtpValid = false;
+        });
+        print('Invalid OTP');
+      }
+    } catch (e) {
+      print('Error verifying OTP: $e');
+      setState(() {
+        _isOtpValid = false;
+      });
+    }
+  }
+
+  Future<void> _saveUserInfo(String email) async {
+    String emailKey = email.replaceAll('.', '+');
+    await _databaseReference.child('User/$emailKey').set({
+      'centerName': '',
+      'nickName': '호미니',
+      'point': 0,
+      'isAdmin': Config().isAdmin,
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final String email = ModalRoute.of(context)!.settings.arguments as String;
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -39,11 +97,7 @@ class _login_signUp2_State extends State<login_signUp2> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyHomePage()),
-                      );
+                      Navigator.pop(context);
                     },
                     child: Container(
                       width: 44,
@@ -53,7 +107,7 @@ class _login_signUp2_State extends State<login_signUp2> {
                     ),
                   ),
                   Text(
-                    '1/2',
+                    '2/2',
                     style: TextStyle(
                       color: Color(0xFF111111),
                       fontSize: 16,
@@ -66,10 +120,7 @@ class _login_signUp2_State extends State<login_signUp2> {
               ),
             ),
             Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width / 2,
+              width: MediaQuery.of(context).size.width / 2,
               height: 4,
               color: Color(0xFF111111),
             ),
@@ -95,16 +146,15 @@ class _login_signUp2_State extends State<login_signUp2> {
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
                       width: 1,
-                      color: _isValidCode ? Color(0xFF111111) : Colors.red,
+                      color: _isOtpValid ? Color(0xFF111111) : Colors.red,
                     ),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 child: TextField(
-                  controller: _emailController,
-                  onChanged: _validateEmail,
+                  controller: _otpController,
                   decoration: InputDecoration(
-                    hintText: '123456@123454.com',
+                    hintText: '인증번호를 입력하세요',
                     border: InputBorder.none,
                     isDense: true,
                     contentPadding: EdgeInsets.symmetric(vertical: 0),
@@ -116,9 +166,9 @@ class _login_signUp2_State extends State<login_signUp2> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Opacity(
-                opacity: _isValidCode ? 0 : 1,
+                opacity: _isOtpValid ? 0 : 1,
                 child: Text(
-                  '메일로 받은 인증번호를 입력해주세요',
+                  '인증번호가 올바르지 않습니다',
                   style: TextStyle(
                     color: Color(0xFFEB2661),
                     fontSize: 14,
@@ -133,28 +183,22 @@ class _login_signUp2_State extends State<login_signUp2> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GestureDetector(
                 onTap: () {
-                  if (_isValidCode) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => myPage()),
-                    );
-                  }
+                  print("_verifyOtp(email)");
+                  _verifyOtp(email);
                 },
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8, vertical: 16),
                   decoration: ShapeDecoration(
-                    color: _isValidCode ? Color(0xFF489CFF) : Color(
-                        0xFFBFDDFF),
+                    color: Color(0xFF489CFF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   child: Center(
                     child: Text(
-                      '다음',
+                      '확인',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
