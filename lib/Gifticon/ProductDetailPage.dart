@@ -44,7 +44,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             builder: (context, constraints) {
               double width = constraints.maxWidth;
               return Image.asset(
-                widget.gifticon.image,
+                widget.gifticon.imageUrl,
                 width: width,
                 height: width,
                 fit: BoxFit.fill,
@@ -60,7 +60,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    widget.gifticon.name,
+                    widget.gifticon.gifticonName,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -68,7 +68,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    '${widget.gifticon.point}p',
+                    '${widget.gifticon.price}p',
                     style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                 ),
@@ -76,7 +76,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    '${widget.gifticon.contributorName}님 제공',
+                    '${widget.gifticon.donorNickname}님 제공',
                     style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ),
@@ -86,7 +86,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    widget.gifticon.contributorDescription,
+                    widget.gifticon.letter,
                     style: TextStyle(fontSize: 14),
                   ),
                 ),

@@ -19,7 +19,7 @@ class ProductCard extends StatelessWidget {
               builder: (context, constraints) {
                 double width = constraints.maxWidth;
                 return Image.asset(
-                  gifticon.image,
+                  gifticon.imageUrl,
                   width: width,
                   height: width,
                   fit: BoxFit.fill,
@@ -29,21 +29,21 @@ class ProductCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 16.0, top: 12.0),
               child: Text(
-                gifticon.name,
+                gifticon.gifticonName,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0, top: 2.0),
               child: Text(
-                '${gifticon.point}p',
+                '${gifticon.price}p',
                 style: TextStyle(fontSize: 14),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0, top: 2.0),
               child: Text(
-                '${gifticon.contributorName}님 제공',
+                '${gifticon.donorNickname}님 제공',
                 style: TextStyle(fontSize: 12, color: Colors.black54),
               ),
             )
