@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:homission/Presentation/Mission/Home/admin_bottom_tap_screen.dart';
 import 'package:homission/Presentation/Mission/Home/bottom_tap_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:homission/Presentation/Mission/Home/home_screen.dart';
 import 'package:homission/Presentation/Login/main.dart';
+import 'Config.dart';
 
 class login_signIn extends StatefulWidget {
   const login_signIn({super.key});
@@ -45,12 +47,20 @@ class _login_signIn_State extends State<login_signIn> {
     String password = _passwordController.text.trim();
     bool isValid = await signInWithEmailAndPassword(email, password);
     if (isValid) {
-      print("Login successful!");
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  BottomTapScreen()));
+      if (Config().isAdmin = false) {
+        print("Login successful!");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    BottomTapScreen()));
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    AdminBottomTapScreen()));
+      }
     } else {
       print("Login failed!");
       _isWrongPassword = true;
