@@ -5,24 +5,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'admin_mission_screen_viewmodel.dart';
 import 'AdminDetail/admin_mission_detail_screen.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => AdminMissionViewModel(),
-      child: const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: AdminMissionScreen(),
-      ),
-    );
-  }
-}
+// void main() {
+//   runApp(const MyApp());
+// }
+//
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ChangeNotifierProvider(
+//       create: (_) => AdminMissionViewModel(),
+//       child: const MaterialApp(
+//         debugShowCheckedModeBanner: false,
+//         home: AdminMissionScreen(),
+//       ),
+//     );
+//   }
+// }
 
 class AdminMissionScreen extends StatefulWidget {
   const AdminMissionScreen({super.key});

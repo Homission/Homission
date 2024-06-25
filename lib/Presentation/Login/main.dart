@@ -9,6 +9,9 @@ import 'package:homission/Presentation/Login/login_admin.dart';
 import 'package:homission/Presentation/Login/Config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:homission/firebase_options.dart';
+import 'package:provider/provider.dart';
+
+import '../Mission/AdminMission/admin_mission_screen_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,18 +26,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.white,
-        scaffoldBackgroundColor: Colors.white,
-        indicatorColor: Colors.white,
-        canvasColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          color: Colors.white, // 앱바 텍스트 색상
+    return ChangeNotifierProvider(
+      create: (_) => AdminMissionViewModel(),
+      child: MaterialApp(
+        theme: ThemeData(
+          primaryColor: Colors.white,
+          scaffoldBackgroundColor: Colors.white,
+          indicatorColor: Colors.white,
+          canvasColor: Colors.white,
+          appBarTheme: AppBarTheme(
+            color: Colors.white, // 앱바 텍스트 색상
+          ),
         ),
+        home: const MyHomePage(),
+        debugShowCheckedModeBanner: false,
       ),
-      home: const MyHomePage(),
-      debugShowCheckedModeBanner: false,
     );
   }
 }
