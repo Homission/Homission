@@ -6,7 +6,6 @@ import 'package:homission/Presentation/Mission/DetailMission/detail_screen_viewm
 import 'package:provider/provider.dart';
 import 'package:homission/Presentation/Mission/Usecase/MissionDetailUseCase.dart';
 
-
 class MissionDetailScreen extends StatelessWidget {
   final String userId;
   final int missionId;
