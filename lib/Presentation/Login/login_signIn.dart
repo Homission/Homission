@@ -34,7 +34,7 @@ class _login_signIn_State extends State<login_signIn> {
   Future<bool> signInWithEmailAndPassword(String email, String password) async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: "homission@gmail.com", password: "123456");
       return true;
     } catch (e) {
       print('Error: $e');
@@ -59,7 +59,7 @@ class _login_signIn_State extends State<login_signIn> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    AdminBottomTapScreen()));
+                    BottomTapScreen()));
       }
     } else {
       print("Login failed!");

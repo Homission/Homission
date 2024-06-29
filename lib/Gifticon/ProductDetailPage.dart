@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homission/Gifticon/Gifticon.dart';
 import 'package:homission/Gifticon/GifticonBuyPage.dart';
 import 'package:homission/Gifticon/GifticonStorage.dart';
+import 'package:homission/Gifticon/ReportPage.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Gifticon gifticon;
@@ -44,7 +45,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             builder: (context, constraints) {
               double width = constraints.maxWidth;
               return Image.asset(
-                widget.gifticon.imageUrl,
+                widget.gifticon.image,
                 width: width,
                 height: width,
                 fit: BoxFit.fill,
@@ -60,7 +61,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    widget.gifticon.gifticonName,
+                    widget.gifticon.name,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -68,7 +69,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    '${widget.gifticon.price}p',
+                    '${widget.gifticon.point}p',
                     style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                 ),
@@ -76,7 +77,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    '${widget.gifticon.donorNickname}님 제공',
+                    '${widget.gifticon.contributorName}님 제공',
                     style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ),
@@ -86,8 +87,31 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    widget.gifticon.letter,
+                    widget.gifticon.contributorDescription,
                     style: TextStyle(fontSize: 14),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      // Implement navigation to another screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ReportPage(gifticon: widget.gifticon)),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.report_problem, color: Colors.grey),
+                        SizedBox(width: 8),
+                        Text(
+                          '기프티콘에 문제가 있다면?',
+                          style: TextStyle(fontSize: 14, color: Colors.grey, decoration: TextDecoration.underline),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -104,7 +128,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   if (_isPurchased) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => GifticonStorage(gifticons: [widget.gifticon], onTap: () {})), // GifticonStorage 페이지로 이동
+                      MaterialPageRoute(builder: (context) => GifticonStorage(gifticons: [widget.gifticon], onTap: () {}, title: '구매 내역',)), // GifticonStorage 페이지로 이동
                     );
                   } else {
                     final result = await Navigator.push(
