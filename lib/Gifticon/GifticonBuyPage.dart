@@ -49,7 +49,7 @@ class _GifticonBuyPageState extends State<GifticonBuyPage> {
                     borderRadius: BorderRadius.circular(12.0),
                     // Set border radius here
                     child: Image.asset(
-                      widget.gifticon.imageUrl,
+                      widget.gifticon.image,
                       width: 72,
                       height: 72,
                       fit: BoxFit.cover,
@@ -60,20 +60,20 @@ class _GifticonBuyPageState extends State<GifticonBuyPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.gifticon.gifticonName,
+                        widget.gifticon.name,
                         style:
                         TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 8),
                       Text(
-                        '${widget.gifticon.price}P',
+                        '${widget.gifticon.point}P',
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.black),
                       ),
                       Text(
-                        '${widget.gifticon.donorNickname}님 제공',
+                        '${widget.gifticon.contributorName}님 제공',
                         style: TextStyle(fontSize: 12, color: Colors.black54),
                       ),
                     ],
@@ -113,7 +113,7 @@ class _GifticonBuyPageState extends State<GifticonBuyPage> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _hintText = widget.gifticon.price;
+                        _hintText = widget.gifticon.point;
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -173,7 +173,7 @@ class _GifticonBuyPageState extends State<GifticonBuyPage> {
                   Text('총 상품 금액',
                       style: TextStyle(fontSize: 14, color: Colors.black54)),
                   Text(
-                    '${widget.gifticon.price}P',
+                    '${widget.gifticon.point}P',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -204,7 +204,7 @@ class _GifticonBuyPageState extends State<GifticonBuyPage> {
                   Text('부족한 포인트',
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
                   ),
-                  Text('${widget.gifticon.price - _hintText}P',
+                  Text('${widget.gifticon.point - _hintText}P',
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue)),
                 ],
               ),
